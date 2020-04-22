@@ -54,12 +54,10 @@
       "scripts": {
         "dev": "next",
         "build": "next build",
-        "start": "next start",
-        "export": "NODE_ENV=production npm run build && next export -o docs && touch docs/.nojekyll"
+        "start": "next start"
       }
     }
     ```
-    (the export script is for github pages)
 
 ### [Typescript](https://github.com/zeit/next.js#typescript)
 
@@ -347,23 +345,7 @@
       assetPrefix: isProd ? prodAssetPrefix : '';,
     });
     ```
-2. change `as` prop in `next/Link` to add `linkPrefix`
-    ```tsx
-    import React from 'react';
-    import Link from 'next/link';
-    import { join } from 'path';
-
-    const linkPrefix = process.env.LINK_PREFIX;
-
-    const PrefixedLink: React.FC<PrefixedLinkProps> = ({
-      href,
-      as = href,
-      linkPrefix = LINK_PREFIX,
-      ...props
-    }) => <Link href={href} as={join(linkPrefix, as.toString())} {...props} />;
-
-    export default PrefixedLink;
-    ```
+2. change `as` prop in `next/Link` to add `linkPrefix`, similar to `src/features/link/Link.tsx` in the example setup
 3. change `scripts` in `package.json`
     ```json
     {
@@ -380,6 +362,18 @@
 1. 
     ```sh
     npm i -D @babel/plugin-proposal-nullish-coalescing-operator @babel/plugin-proposal-optional-chaining
+    ```
+2. add the plugins to `babel.config.js`
+    ```js
+    module.exports = {
+      presets: [
+        // ...
+      ],
+      plugins: [
+        '@babel/plugin-proposal-optional-chaining',
+        '@babel/plugin-proposal-nullish-coalescing-operator',
+      ],
+    };
     ```
 
 ### Dotenv
