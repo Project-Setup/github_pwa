@@ -9,6 +9,7 @@
 ## Other Project Setup
 * **[[Nextjs_Ts_Eslint]](https://github.com/Project-Setup/Nextjs_Ts_Eslint)** NextJs, EmotionJs, Typescript
 * **[[nextjs_redux_toolkit]](https://github.com/Project-Setup/nextjs_redux_toolkit)** NextJs, Redux-Toolkit
+* **[[github_sql_pwa]](https://github.com/Project-Setup/github_sql_pwa)** Github page pwa setup with NextJs, code splitting Redux-Toolkit, Sql.js, Typeorm
 
 ## Usage of this example setup
 
