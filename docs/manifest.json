@@ -3,12 +3,12 @@
 	"short_name": "github_pwa",
 	"icons": [
 		{
-			"src": "/github_pwa/icons/icons192x192.png",
+			"src": "/github_pwa/icons/icon192x192.png",
 			"sizes": "192x192",
 			"type": "image/png"
 		},
 		{
-			"src": "/github_pwa/icons/icons512x512.png",
+			"src": "/github_pwa/icons/icon512x512.png",
 			"sizes": "512x512",
 			"type": "image/png"
 		}
