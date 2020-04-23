@@ -420,7 +420,7 @@
 ### [PWA](https://github.com/shadowwalker/next-pwa#readme)
 1.
     ```sh
-    npm i -S next-pwa
+    npm i -S next-pwa next-manifest
     ```
 2. change `next.config.js`
     ```js
@@ -441,6 +441,7 @@
         withPWA({
           // ...
 
+          // service worker
           pwa: {
             disable: !isProd,
             subdomainPrefix: proces.env.LINK_PREFIX,
@@ -477,9 +478,9 @@
         })
       );
     ```
-4. add `public/icons` folder and include corresponding icon files in the folder
-5. copy `ManifestHead.tsx` from the example setup `src/features/head`
-6. import `ManifestHead` in pages
+3. add `public/icons` folder and include corresponding icon files in the folder
+4. copy `ManifestHead.tsx` from the example setup `src/features/head`
+5. import `ManifestHead` in pages
 
 ### Notes:
 1. NextJs, next-pwa, workbox are still growing their api, so this project setup will be modified in the future for easier setup.
