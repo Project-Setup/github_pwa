@@ -1,5 +1,15 @@
 # Example Github Page PWA with NextJs, code splitting Redux-Toolkit, Typescript, Eslint, Jest and Emotion.
 
+## Highlight
+* **Multi-page** **React** **Progressive Web App**
+* Installable for **offline** use through Chrome on desktop or **mobile**
+* Can be statically hosted on **Github Page** for free (or as a regular web app hosted on a custom server)
+* Dynamically loaded **Redux** reducers for **code splitting**
+* Prefetch security sensitive content at build time
+* All in **Typescript**/Javascript with **CSS-in-JS**
+* Easy testing with **Jest** and **Enzyme**
+* **Eslint** helps practice standard coding styles
+
 ## Versions
 * NextJs v9.3.6
 * Redux-Toolkit v1.3.5
