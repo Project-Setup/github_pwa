@@ -11,10 +11,10 @@
 * **Eslint** helps practice standard coding styles
 
 ## Versions
-* NextJs v9.3.6
-* Redux-Toolkit v1.3.5
+* NextJs v9.4.2
+* Redux-Toolkit v1.3.6
 * Emotion v10
-* Typescript v3.8.3
+* Typescript v3.9.2
 
 ## Other Project Setup
 * **[[Nextjs_Ts_Eslint]](https://github.com/Project-Setup/Nextjs_Ts_Eslint)** NextJs, EmotionJs, Typescript
@@ -29,12 +29,12 @@
     npm install
     ```
 1. remove unwanted files in `public/`, `src/`
-2. modify `configs/` and add `.env/`
+2. add `.env` and other .env files
 3. preview dev progress on `http://localhost:3000/`
     ```sh
     npm run dev
     ```
-4. export to `docs/` for GIthub Page deploy
+4. export to `docs/` for Github Page deploy
     ```sh
     npm run export
     ```
@@ -108,7 +108,8 @@
         "skipLibCheck": true,
         "strict": true,
         "target": "esnext",
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": "./src"
       },
       "exclude": [
         "node_modules",
@@ -129,7 +130,7 @@
 ### [Eslint and Prettier](https://dev.to/robertcoopercode/using-eslint-and-prettier-in-a-typescript-project-53jb)
 1. 
     ```sh
-    npm i -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react
+    npm i -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-import-resolver-typescript
     npm i -D eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-react-hooks
     npm i -D prettier eslint-config-prettier eslint-plugin-prettier
     ```
@@ -205,6 +206,7 @@
           node: {
             extensions: ['.js', '.jsx', '.ts', '.tsx'],
           },
+          typescript: {},
         },
         react:  {
           version:  'detect',  // Tells eslint-plugin-react to automatically detect the version of React to use
@@ -268,6 +270,7 @@
           '<rootDir>/__mocks__/mocks.js',
         '\\.(css|less|scss)$': '<rootDir>/__mocks__/mocks.js',
       },
+      moduleDirectories: ['node_modules', 'src'],
     };
     ```
 5. create `babel.config.js`
@@ -280,6 +283,11 @@
     ```js
     import Enzyme from 'enzyme';
     import Adapter from 'enzyme-adapter-react-16';
+    import { join } from 'path';
+    import { loadEnvConfig } from 'next/dist/lib/load-env-config';
+
+    // to load '.env' files in test
+    loadEnvConfig(join(__dirname, '.../'));
 
     Enzyme.configure({ adapter: new Adapter() });
     ```
@@ -349,19 +357,19 @@
 ### [Deploy to Github Pages](https://github.com/zeit/next.js/issues/3335#issuecomment-489354854)
 (deploy to /docs intead of using gh-pages branch; replace `{folder}` with the project name in github repo)
 
-1. create `LINK_PREFIX` in `next.config.js`
+1. add `.env.production`
+  ```sh
+  NEXT_PUBLIC_LINK_PREFIX=/{folder}
+  ```
+2. create `LINK_PREFIX` in `next.config.js`
     ```js
-    const isProd = process.env.NODE_ENV === 'production';
-    const prodAssetPrefix = '/{folder}';
+    const LINK_PREFIX = process.env.NEXT_PUBLIC_LINK_PREFIX || '';
     module.exports = () => ({
-      env: {
-        LINK_PREFIX: isProd ? prodAssetPrefix : '';
-      },
-      assetPrefix: isProd ? prodAssetPrefix : '';,
+      assetPrefix: LINK_PREFIX,
     });
     ```
-2. change `as` prop in `next/Link` to add `linkPrefix`, similar to `src/features/link/Link.tsx` in the example setup
-3. change `scripts` in `package.json`
+3. change `as` prop in `next/Link` to add `linkPrefix`, similar to `src/features/link/Link.tsx` in the example setup
+4. change `scripts` in `package.json`
     ```json
     {
       "scripts": {
@@ -391,31 +399,6 @@
     };
     ```
 
-### Dotenv
-1.
-    ```sh
-    npm i -S dotenv
-    ```
-2. add `.env/development.env` and `.env/production.env`
-3. add `config/env.mapping.js`
-    ```js
-    /* eslint-disable @typescript-eslint/no-var-requires */
-    const path = require('path');
-    require('dotenv').config({
-      path: path.join(__dirname, `../.env/${process.env.NODE_ENV}.env`),
-    });
-
-    // env mapping for exposure to client
-    module.exports = {/* EXAMPLE_VAR: process.env.EXAMPLE */};
-    ```
-4. add to `jest/jest.setup.js`
-    ```js
-    // ...
-    import envMapping from '../configs/env.mapping';
-    Object.assign(process.env, envMapping);
-    // ...
-    ```
-
 <br/>
 
 ### [Redux-Toolkit](https://redux-toolkit.js.org/)
@@ -439,6 +422,7 @@
 2. change `next.config.js`
     ```js
       const isProd = process.env.NODE_ENV === 'production';
+      const FOLDER = LINK_PREFIX && LINK_PREFIX.substring(1);
 
       // tranfrom precache url for browsers that encode dynamic routes
       // i.e. "[id].js" => "%5Bid%5D.js"
@@ -458,7 +442,7 @@
           // service worker
           pwa: {
             disable: !isProd,
-            subdomainPrefix: proces.env.LINK_PREFIX,
+            subdomainPrefix: LINK_PREFIX,
             dest: 'public',
             navigationPreload: true,
           },
