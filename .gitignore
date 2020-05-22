@@ -4,7 +4,7 @@ coverage
 .DS_Store
 public/build/*
 *.log
-.env
+.env*.local
 out/
 public/workbox-*.js
 public/sw.js

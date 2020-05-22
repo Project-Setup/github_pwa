@@ -1,11 +1,11 @@
-import { MakeStoreArg } from '../utils/redux/withRedux';
-import configureStore from '../utils/redux/configureStore';
-import { commonReducer } from '../reducers/reducerCombo';
+import { MakeStoreArg } from 'utils/redux/withRedux';
+import configureStore from 'utils/redux/configureStore';
+import { commonReducer } from 'reducers/reducerCombo';
 
 const makeStore = ({ preloadedState }: MakeStoreArg<any>) => {
   return configureStore({
     reducer: commonReducer,
-    devTools: process.env.ENV !== 'production',
+    devTools: process.env.NODE_ENV !== 'production',
     preloadedState,
   });
 };

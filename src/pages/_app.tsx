@@ -2,8 +2,8 @@ import React from 'react';
 import { NextComponentType } from 'next';
 import { AppContext, AppProps } from 'next/app';
 import { Provider } from 'react-redux';
-import withRedux from '../utils/redux/withRedux';
-import makeStore from '../stores';
+import withRedux from 'utils/redux/withRedux';
+import makeStore from 'stores';
 
 export interface ModifiedAppInitialProps<A = { [key in string]?: string }> {
   appProps: A;
